@@ -6,6 +6,8 @@
     <title>Unity Web Player | ProceduralMeshGeneration</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="TemplateData/diagnostics.css">
+    <script src="TemplateData/diagnostics.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -20,6 +22,7 @@
       <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-fullscreen-button"></div>
+        <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
         <div id="unity-build-title">ProceduralMeshGeneration</div>
       </div>
     </div>
@@ -52,12 +55,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/ProcedureCreation.loader.js";
+      var loaderUrl = buildUrl + "/5bda952f79527bbc01ccb78bd2959dd4.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/ProcedureCreation.data.gz",
-        frameworkUrl: buildUrl + "/ProcedureCreation.framework.js.gz",
-        codeUrl: buildUrl + "/ProcedureCreation.wasm.gz",
+        dataUrl: buildUrl + "/dc0c2a82d90d010e939fccc668a5ae34.data.br",
+        frameworkUrl: buildUrl + "/1fc641fc087db638bb42eecfff984b2b.framework.js.br",
+        codeUrl: buildUrl + "/b277dd77a18e75bb22953535594d37ab.wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "ProceduralMeshGeneration",
@@ -95,6 +98,11 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
+        // position the diagnostics icon in the corner on the canvas
+        diagnostics_icon.style.position = "fixed";
+        diagnostics_icon.style.bottom = "10px";
+        diagnostics_icon.style.right = "0px";
+        canvas.after(diagnostics_icon);
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
@@ -111,6 +119,9 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
+                document.getElementById("diagnostics-icon").onclick = () => {
+                  unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMetricsInfo);
+                };
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
